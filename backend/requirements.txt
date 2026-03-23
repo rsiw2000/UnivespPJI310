@@ -1,0 +1,7 @@
+requests
+Flask
+flask-cors
+pyhumps
+sqlalchemy
+#psycopg2-binary
+mysqlclient

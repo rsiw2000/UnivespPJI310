@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<script src="../static/script/jquery-3.7.1.min.js"></script>
+<script src="./static/script/functions.js"></script>
+
+<head>
+    <h1>Eu Indico</h1>
+    <title>Buscador de Prestadores de Serviço</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+
+<body>
+  <h1>Minhas Profissões</h1>
+  <div class="container">
+    <table>
+      <tr>
+        <th>Profissão</th>
+        <th>Situação</th>
+        <th>Avaliação</th>
+      </tr>
+    {% for option in minhasProfissoes %}
+    <tr>
+      <td value={{option.id}}>{{option.nome}}</td>
+      <td>{{option.situacao}}</td>
+      <td>{{option.avaliacao}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <div class="cadastro" style="display:block" >
+    <h2>
+      Nova Profissão
+    </h2>
+    <label for="nome">Nome:  </label>
+    <select id="profissao" name="profissao">
+      {% for option in profissoes %}
+        <option value={{option.id}}>{{option.nome}}</option>
+      {% endfor %}
+    </select>
+    <br>
+    <input type="button" value="Cadastrar" onclick="postAndReloadIfSuccess('/minhas_profissoes/nova', {'id': $('#profissao').val()}, function(msg){ $('#message').text(msg);} );">
+  </div>
+
+    <h2 id="message">{{message}}</h2>
+  </div> 
+</body>
+</html>

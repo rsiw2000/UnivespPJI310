@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt">
+<script src="./static/script/functions.js"></script>
+<link rel="stylesheet" href="static/login.css">
+<head>
+  <!-- <h1>Eu Indico</h1> -->    
+  <title>Buscador de Prestadores de Serviço</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+<body>
+  <title>Buscador de Prestadores de Serviço</title>
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <img src="static/images/logo_v1_lv.jpeg" style="width:80%"/>
+      </div>
+      <div class="column">
+    <h2>{{welcome_message}}</h2>
+    <h2>Selecione:</h2>
+    {% for caption, link in actions %}
+      <li>
+        <a href={{link}}>{{caption}}</a>
+      </li>
+    {% endfor %}    
+      </div>
+    </div>
+  </div> 
+</body>
+
+</html>

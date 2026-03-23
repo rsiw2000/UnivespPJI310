@@ -1,0 +1,72 @@
+[
+  {
+    "id_usuario": 1,
+    "id_profissao": 7,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 1,
+    "id_profissao": 6,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 1,
+    "id_profissao": 16,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 2,
+    "id_profissao": 17,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 3,
+    "id_profissao": 5,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 4,
+    "id_profissao": 16,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 4,
+    "id_profissao": 10,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 4,
+    "id_profissao": 15,
+    "situacao": "Inativo"
+  },
+  {
+    "id_usuario": 5,
+    "id_profissao": 9,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 5,
+    "id_profissao": 2,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 5,
+    "id_profissao": 3,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 6,
+    "id_profissao": 16,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 6,
+    "id_profissao": 15,
+    "situacao": "Ativo"
+  },
+  {
+    "id_usuario": 7,
+    "id_profissao": 9,
+    "situacao": "Ativo"
+  }
+]

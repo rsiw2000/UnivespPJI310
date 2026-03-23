@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+  <script src="../static/script/jquery-3.7.1.min.js"></script>
+  <script src="../static/script/functions.js"></script>
+  <script src="../static/script/cadastro.js"></script>
+  <head>
+    <h1>Eu Indico</h1>
+    <title>Buscador de Prestadores de Serviço</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+  </head>
+  <body>
+    <h1>{{title}}</h1>
+    <form method="POST" action="do_cadastro">
+      <input type="hidden" name="novo" id="novo" value="{{form['novo']}}">
+      <section id="secGeneral">
+        <label for="nome">Nome: </label>
+        <input type="text" name="nome" id="nome" maxlength="100" size="40" value="{{form['nome']}}"><br>
+        <label for="email">Email:  </label>
+        <input type="text" name="email" id="email" maxlength="100" size="40" value="{{form['email']}}"><br>
+        <label for="cpfCnpj">CPF/CNPJ:  </label>
+        <input type="text" name="cpfCnpj" id="cpfCnpj" maxlength="20" size="20" value="{{form['cpfCnpj']}}"><br>
+        <label for="telefone">Telefone:  </label>
+        <input type="text" name="telefone" id="telefone" maxlength="20" size="20" value="{{form['telefone']}}"><br>
+        <label for="estado">Estado: </label>
+        <select id="estado" name="estado" onchange="getCidades(this.options[this.selectedIndex].value)">
+          {% for option in estados %}
+            <option {% if option.Selected %}selected="selected"{% endif %} value={{option.Value}}>{{option.Label}}</option>
+          {% endfor %}
+        </select>
+        <br>
+        <label for="cidade">Cidade: </label>
+        <select id="cidade" name="cidade">
+          {% for option in cidades %}
+            <option {% if option.Selected %}selected="selected"{% endif %} value={{option.Value}}>{{option.Label}}</option>
+          {% endfor %}
+        </select>
+        <br>
+        <label for="bairro">Bairro: </label>
+        <input type="text" name="bairro" id="bairro" maxlength="100" size="40" value="{{form['bairro']}}"><br>
+      </section>
+      <section id="secPassword">
+        <br>
+        {% if form['novo'] != "S" %}
+        <label for="password" id="lbcurrentpwd">Senha Atual: </label>
+        <input type="password" name="currentPassword" id="currentPassword" maxlength="20" size="20" value="-"><br>
+        <input type="hidden" name="changePassword" id="changePassword" value="{{form['changePassword']}}">
+        {% endif %}
+        <label for="password" id="lbnewpwd">Senha: </label>
+        <input type="password" name="password" id="password" maxlength="20" size="20" value=""><br>
+        <label for="confirmPassword">Confirme a senha: </label>
+        <input type="password" name="confirmPassword" maxlength="20" size="20" id="confirmPassword" value="">
+      </section>
+      <div id="divControls">
+        <br>
+        {% if form['novo'] == "S" %}
+        <input type="submit" value="Cadastrar">
+        {% else %}
+        <input type="button" id="alterarSenha" value="Alterar Senha" onclick="mostraAlterarSenha()"><br>
+        <input type="submit" value="Atualizar">
+        {% endif %}
+        <input type="button" value="Cancelar" onclick="history.back()">
+      </div>
+    </form>
+    <script>
+      $(document).ready ( function(){
+        var novo = $("#novo").attr("value") == "S";
+        if ($("#cidade option").length == 1){
+            getCidades(estado.options[estado.selectedIndex].value);
+        }
+        if (!novo){
+            $("#email").attr("readonly",true);
+            $("#cpfCnpj").attr("readonly",true);
+            if ($("#changePassword").attr("value") == "N"){
+                escondeAlterarSenha();
+            } else {
+                mostraAlterarSenha();
+            }
+        }
+      });
+    </script>
+  </body>
+    <p>{{message}}</p>
+</html>

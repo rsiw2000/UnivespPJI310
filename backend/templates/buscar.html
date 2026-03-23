@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<script src="../static/script/jquery-3.7.1.min.js"></script>
+<script src="./static/script/functions.js"></script>
+<script src="./static/script/profissoes.js"></script>
+
+<head>
+    <h1>Eu Indico</h1>
+    <title>Buscador de Prestadores de Serviço</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+
+<body>
+  <h1>Busca de Profissionais</h1>
+  <div class="profissao">
+    <h2>Selecione a profissão</h2>
+    <select id="profissao" name="profissao" onchange="getProfissionais(this.options[this.selectedIndex].value)">
+      <option value=0>Selecione ...</option>
+      {% for option in profissoes %}
+        <option value={{option.id}}>{{option.nome}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <br>
+  <div class="profissionais">
+    <h2>Profissionais localizados</h2>
+    <table id="profissionais">
+      <thead>
+        <th>Nome</th>
+        <th>Avaliação</th>
+        <th>Contato</th>
+        <th>Avaliar Profissional</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="message">
+    <h2 id="profissionais_message">{{message}}</h3>
+    <div class="avaliar" id="divAvaliar" style="visibility: hidden">
+      <label id="NomePrestador">Nome: fulano</label><br>
+      <label for="avaliacoes">Avaliação:</label>
+      <select id="avaliacoes" name="avaliacoes">
+      {% for option in avaliacoes %}
+        <option value={{option.id}}>{{option.nome}}</option>
+      {% endfor %}
+      </select>
+      <br>
+      <label for="avaliacoes">Comentário:</label><br>
+      <textarea id="comentario" name="comentario" cols="40" rows="5" maxlength="250"></textarea>
+      <br><bR>
+      <input type="button" value="Confirmar" onclick="confirmarAvaliacao()">
+      <input type="button" value="Cancelar" onclick="cancelarAvaliacao()"><br>
+      <input type="hidden" id="idProfissao" value="">
+      <input type="hidden" id="idPrestador" value="">
+    </select>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+###
+# LOGIN
+#
+POST https://fmp.pythonanywhere.com/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+"username": "23212332@aluno.univesp.br",
+"password": "23212332"
+}
+
+
+###
+# LISTA DE ESTADOS
+#
+GET https://fmp.pythonanywhere.com/api/locations/states HTTP/1.1
+content-type: application/json
+
+####
+# LISTA DE MUNICÍPIOS DE UM ESTADO
+#
+GET https://fmp.pythonanywhere.com/api/locations/cities/RR HTTP/1.1
+content-type: application/json
+
+
+####
+# LISTA DE PROFISSOES
+#
+GET https://fmp.pythonanywhere.com/api/professions HTTP/1.1
+content-type: application/json
+
+####

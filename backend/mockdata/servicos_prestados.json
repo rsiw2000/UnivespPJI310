@@ -1,0 +1,170 @@
+[
+  {
+    "id_usuario_cliente": 1,
+    "id_usuario_prestador": 2,
+    "id_profissao": 17,
+    "avaliacao": 3,
+    "observacao": "servico prestado  1 - regular",
+    "data_avaliacao": "2025-05-17"
+  },
+  {
+    "id_usuario_cliente": 1,
+    "id_usuario_prestador": 3,
+    "id_profissao": 5,
+    "avaliacao": 4,
+    "observacao": "servico prestado  2 - bom",
+    "data_avaliacao": "2025-03-15"
+  },
+  {
+    "id_usuario_cliente": 2,
+    "id_usuario_prestador": 3,
+    "id_profissao": 5,
+    "avaliacao": 5,
+    "observacao": "servico prestado  3 - otimo",
+    "data_avaliacao": "2025-04-16"
+  },
+  {
+    "id_usuario_cliente": 2,
+    "id_usuario_prestador": 5,
+    "id_profissao": 9,
+    "avaliacao": 3,
+    "observacao": "servico prestado  5 - regular",
+    "data_avaliacao": "2025-01-20"
+  },
+  {
+    "id_usuario_cliente": 3,
+    "id_usuario_prestador": 6,
+    "id_profissao": 16,
+    "avaliacao": 4,
+    "observacao": "servico prestado  6 - bom",
+    "data_avaliacao": "2025-01-20"
+  },
+  {
+    "id_usuario_cliente": 3,
+    "id_usuario_prestador": 7,
+    "id_profissao": 9,
+    "avaliacao": 5,
+    "observacao": "servico prestado  7 - otimo",
+    "data_avaliacao": "2025-01-18"
+  },
+  {
+    "id_usuario_cliente": 4,
+    "id_usuario_prestador": 1,
+    "id_profissao": 7,
+    "avaliacao": 1,
+    "observacao": "servico prestado  8 - pessimo",
+    "data_avaliacao": "2025-01-18"
+  },
+  {
+    "id_usuario_cliente": 4,
+    "id_usuario_prestador": 2,
+    "id_profissao": 17,
+    "avaliacao": 3,
+    "observacao": "servico prestado  9 - regular",
+    "data_avaliacao": "2025-02-18"
+  },
+  {
+    "id_usuario_cliente": 4,
+    "id_usuario_prestador": 3,
+    "id_profissao": 5,
+    "avaliacao": 4,
+    "observacao": "servico prestado 10 - bom",
+    "data_avaliacao": "2025-02-25"
+  },
+  {
+    "id_usuario_cliente": 5,
+    "id_usuario_prestador": 1,
+    "id_profissao": 16,
+    "avaliacao": 5,
+    "observacao": "servico prestado 11 - otimo",
+    "data_avaliacao": "2025-03-18"
+  },
+  {
+    "id_usuario_cliente": 5,
+    "id_usuario_prestador": 3,
+    "id_profissao": 5,
+    "avaliacao": 2,
+    "observacao": "servico prestado 12 - ruim",
+    "data_avaliacao": "2025-04-10"
+  },
+  {
+    "id_usuario_cliente": 5,
+    "id_usuario_prestador": 4,
+    "id_profissao": 10,
+    "avaliacao": 3,
+    "observacao": "servico prestado 13 - regular",
+    "data_avaliacao": "2025-05-11"
+  },
+  {
+    "id_usuario_cliente": 6,
+    "id_usuario_prestador": 1,
+    "id_profissao": 6,
+    "avaliacao": 4,
+    "observacao": "servico prestado 14 - bom",
+    "data_avaliacao": "2025-04-18"
+  },
+  {
+    "id_usuario_cliente": 6,
+    "id_usuario_prestador": 2,
+    "id_profissao": 17,
+    "avaliacao": 5,
+    "observacao": "servico prestado 15 - otimo",
+    "data_avaliacao": "2025-03-10"
+  },
+  {
+    "id_usuario_cliente": 6,
+    "id_usuario_prestador": 3,
+    "id_profissao": 5,
+    "avaliacao": 1,
+    "observacao": "servico prestado 16 - pessimo",
+    "data_avaliacao": "2025-02-18"
+  },
+  {
+    "id_usuario_cliente": 6,
+    "id_usuario_prestador": 4,
+    "id_profissao": 16,
+    "avaliacao": 3,
+    "observacao": "servico prestado 17 - regular",
+    "data_avaliacao": "2025-01-21"
+  },
+  {
+    "id_usuario_cliente": 6,
+    "id_usuario_prestador": 5,
+    "id_profissao": 2,
+    "avaliacao": 4,
+    "observacao": "servico prestado 18 - bom",
+    "data_avaliacao": "2025-04-16"
+  },
+  {
+    "id_usuario_cliente": 7,
+    "id_usuario_prestador": 2,
+    "id_profissao": 17,
+    "avaliacao": 5,
+    "observacao": "servico prestado 19 - otimo",
+    "data_avaliacao": "2025-05-15"
+  },
+  {
+    "id_usuario_cliente": 7,
+    "id_usuario_prestador": 4,
+    "id_profissao": 10,
+    "avaliacao": 1,
+    "observacao": "servico prestado 20 - pessimo",
+    "data_avaliacao": "2025-02-05"
+  },
+  {
+    "id_usuario_cliente": 7,
+    "id_usuario_prestador": 5,
+    "id_profissao": 3,
+    "avaliacao": 4,
+    "observacao": "servico prestado 21 - bom",
+    "data_avaliacao": "2024-12-12"
+  },
+  {
+    "id_usuario_cliente": 4,
+    "id_usuario_prestador": 7,
+    "id_profissao": 9,
+    "avaliacao": 5,
+    "observacao": "servico prestado 22 - otimo",
+    "data_avaliacao": "2025-01-14"
+  }
+]

@@ -1,0 +1,16 @@
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (1, "Professor Matemática", "professormatematica");
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (2, 'Mecânico', 'mecanico');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (3, 'Pedreiro', 'pedreiro');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (4, 'Encanador', 'encanador');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (5, 'Vidraceiro', 'vidraceiro');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (6, 'Cuidador de idoso', 'cuidadoridoso');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (7, 'Babá', 'baba');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (8, 'Eletricista', 'eletricista');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (9, 'Motorista', 'motorista');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (10, 'Motoboy', 'motoboy');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (11, 'Diarista', 'diarista');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (12, 'Funileiro', 'funileiro');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (13, 'Pintor', 'pintor');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (14, 'Torneiro mecânico', 'torneiromecanico');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (15, 'Designer Gráfico', 'designergrafico');
+INSERT INTO v0.profissoes (id_profissao, nome, nome_busca) VALUES (16, 'Digitador', 'digitador');

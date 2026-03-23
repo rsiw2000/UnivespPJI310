@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+      <title>Buscador de Prestadores de Serviço</title>
+      <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+     <link rel="stylesheet" href="static/login.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="column">
+        <img src="static/images/logo_v1_lv.jpeg" style="width:80%"/>
+      </div>
+      <div class="column">
+        <h2>Faça login para iniciar</h2>
+        <form method="POST" action="do_login">
+          <label for="username">Usuário:</label><br>      
+          <input type="text" label="Usuario:" name="username" id="username"><br>
+          <label for="password">Senha:</label><br>
+          <input type="password" label="Senha:" name="password" id="password"><br><br>
+          <input type="submit" value="Login" onclick="doLogin"><br><br>
+        </form>
+      </div>
+    </div>
+      <p>{{message}}</p>
+
+  </body>
+</html>

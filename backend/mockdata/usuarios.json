@@ -1,0 +1,94 @@
+[
+  {
+    "id_usuario": 1,
+    "nome": "Ariadne Dominique Capucci Soares",
+    "telefone": "(12) 2322-1782",
+    "cpf_cnpj": 11111,
+    "senha": "5fb74d97a3886b414b541de07dbf17637085c2d3d0a8015e2a9dc35436bc01f2",
+    "email": "23221782@aluno.univesp.br",
+    "id_municipio": 3524402,
+    "id_estado": "SP",
+    "bairro": "",
+    "situacao": "A",
+    "bairro_busca": ""
+  },
+  {
+    "id_usuario": 2,
+    "nome": "Daiane Leite de Souza",
+    "telefone": "(12) 2210-8551",
+    "cpf_cnpj": 22222,
+    "senha": "af744afcafd395049ab3fca82953ff92bf1cd0fd9c11be041202742b6cb561cc",
+    "email": "2108551@aluno.univesp.br",
+    "id_municipio": 3510500,
+    "id_estado": "SP",
+    "bairro": "",
+    "situacao": "A",
+    "bairro_busca": ""
+  },
+  {
+    "id_usuario": 3,
+    "nome": "Rafael Alessandro de Faria",
+    "telefone": "(12) 2312-8601",
+    "cpf_cnpj": 33333,
+    "senha": "41d96ad54a18a070cadd30e7e99960b55688af5ff41ac25df2567ecf2041e874",
+    "email": "2218601@aluno.univesp.br",
+    "id_municipio": 3549904,
+    "id_estado": "SP",
+    "bairro": "",
+    "situacao": "A",
+    "bairro_busca": ""
+  },
+  {
+    "id_usuario": 4,
+    "nome": "Renato Perseguini",
+    "telefone": "+5512996363956",
+    "cpf_cnpj": 44444,
+    "senha": "47da8d45584ead5e9422de2b852cd53da6cb41a20f01383551c54a8c96f16615",
+    "email": "23212332@aluno.univesp.br",
+    "id_municipio": 3548609,
+    "id_estado": "SP",
+    "bairro": "Paiol Grande",
+    "situacao": "A",
+    "bairro_busca": "paiolgrande"
+  },
+  {
+    "id_usuario": 5,
+    "nome": "Kleber Durcelino Randolfi",
+    "telefone": "(12) 3221-6670",
+    "cpf_cnpj": 55555,
+    "senha": "9fc88d5759591e584ab1036253b3cf17aea9235f69096e27b4f9058410b7fbb1",
+    "email": "2216670@aluno.univesp.br",
+    "id_municipio": 3508504,
+    "id_estado": "SP",
+    "bairro": "",
+    "situacao": "A",
+    "bairro_busca": ""
+  },
+  {
+    "id_usuario": 6,
+    "nome": "Izabella Miorin Gancedo",
+    "telefone": "(12) 2345-6789",
+    "cpf_cnpj": 11111111111,
+    "senha": "47da8d45584ead5e9422de2b852cd53da6cb41a20f01383551c54a8c96f16615",
+    "email": "rsiw2000@yahoo.com.br",
+    "id_municipio": 3548609,
+    "id_estado": "SP",
+    "bairro": "Jd Nova Conquista",
+    "situacao": "U",
+    "bairro_busca": "jdnovaconquista"
+  },
+  {
+    "id_usuario": 7,
+    "nome": "Carolina Fortunato",
+    "telefone": "(12) 2221-2232",
+    "cpf_cnpj": 77777,
+    "senha": "47da8d45584ead5e9422de2b852cd53da6cb41a20f01383551c54a8c96f16615",
+    "email": "mcarolina@gmail.com",
+    "id_municipio": 3548609,
+    "id_estado": "SP",
+    "bairro": "Jd Nova Conquista",
+    "situacao": "U",
+    "bairro_busca": "jdnovaconquista"
+  }
+  
+]

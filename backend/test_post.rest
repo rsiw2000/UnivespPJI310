@@ -1,0 +1,64 @@
+POST http://localhost:5050/do_login HTTP/1.1
+content-type: application/json
+
+{
+"username": "rsiw2000@gmail.com",
+"password": "232123322"
+}
+
+
+
+
+
+###
+# URL LOGIN
+POST https://fmp.pythonanywhere.com/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+"username": "23212332@aluno.univesp.br",
+"password": "23212332"
+}
+
+
+###
+
+
+
+POST http://localhost:6050/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+"username": "rsiw2000@gmail.com",
+"password": "232123322"
+}
+
+###
+
+GET https://fmp.pythonanywhere.com/api/locations/states HTTP/1.1
+content-type: application/json
+
+####
+
+GET http://localhost:6050/api/locations/states HTTP/1.1
+content-type: application/json
+
+#####
+
+GET https://fmp.pythonanywhere.com/api/locations/cities/RR HTTP/1.1
+content-type: application/json
+
+
+
+#####
+GET http://localhost:6050/api/professions
+content-type: application/json
+
+
+####
+
+GET https://fmp.pythonanywhere.com/api/professions
+content-type: application/json
+
+
+####

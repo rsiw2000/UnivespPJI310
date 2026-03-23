@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<script src="../static/script/jquery-3.7.1.min.js"></script>
+<script src="./static/script/functions.js"></script>
+
+<head>
+    <h1>Eu Indico</h1>
+    <title>Buscador de Prestadores de Serviço</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+
+<body>
+  <h1>Cadastro de Profissões</h1>
+  <div class="container">
+    <table>
+      <tr>
+        <th>Profissão</th>
+      </tr>
+    {% for option in profissoes %}
+    <tr>
+      <td value={{option.id}}>{{option.nome}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <div class="cadastro" style="display:block" >
+    <h2>
+      Nova Profissão
+    </h2>
+    <label for="nome">Nome:  </label>
+    <input type="text" name="nome" id="nome"><br>
+    <br>
+    <input type="button" value="Cadastrar" onclick="postAndReloadIfSuccess('/profissoes/nova', {'nome': $('#nome').val()}, function(msg){ $('#message').text(msg);} );">
+    <!-- <input type="button" value="Cancelar"><br>   -->
+  </div>
+
+    <h2 id="message">{{message}}</h2>
+  </div> 
+</body>
+</html>

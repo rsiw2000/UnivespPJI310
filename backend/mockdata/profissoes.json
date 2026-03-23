@@ -1,0 +1,82 @@
+[
+  {
+    "id_profissao": 2,
+    "nome": "Mecânico",
+    "nome_busca": "mecanico"
+  },
+  {
+    "id_profissao": 3,
+    "nome": "Pedreiro",
+    "nome_busca": "pedreiro"
+  },
+  {
+    "id_profissao": 4,
+    "nome": "Encanador",
+    "nome_busca": "encanador"
+  },
+  {
+    "id_profissao": 5,
+    "nome": "Vidraceiro",
+    "nome_busca": "vidraceiro"
+  },
+  {
+    "id_profissao": 6,
+    "nome": "Cuidador de idoso",
+    "nome_busca": "cuidadoridoso"
+  },
+  {
+    "id_profissao": 7,
+    "nome": "Babá",
+    "nome_busca": "baba"
+  },
+  {
+    "id_profissao": 8,
+    "nome": "Eletricista",
+    "nome_busca": "eletricista"
+  },
+  {
+    "id_profissao": 9,
+    "nome": "Motorista",
+    "nome_busca": "motorista"
+  },
+  {
+    "id_profissao": 10,
+    "nome": "Motoboy",
+    "nome_busca": "motoboy"
+  },
+  {
+    "id_profissao": 11,
+    "nome": "Diarista",
+    "nome_busca": "diarista"
+  },
+  {
+    "id_profissao": 12,
+    "nome": "Funileiro",
+    "nome_busca": "funileiro"
+  },
+  {
+    "id_profissao": 13,
+    "nome": "Pintor",
+    "nome_busca": "pintor"
+  },
+  {
+    "id_profissao": 14,
+    "nome": "Torneiro mecânico",
+    "nome_busca": "torneiromecanico"
+  },
+  {
+    "id_profissao": 15,
+    "nome": "Designer Gráfico",
+    "nome_busca": "designergrafico"
+  },
+  {
+    "id_profissao": 16,
+    "nome": "Digitador",
+    "nome_busca": "digitador"
+  },
+  {
+    "id_profissao": 17,
+    "nome": "Professora Português",
+    "nome_busca": "professoraportugues"
+  }
+]
