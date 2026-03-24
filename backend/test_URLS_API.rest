@@ -59,14 +59,6 @@ content-type: application/json
     "id": 17
 }
 
-
-###
-# BUSCA PROFISSIONAIS
-#
-GET  https://fmp.pythonanywhere.com/api/search/professionals?idProfissao=17 HTTP/1.1
-X-Username: 23212332@aluno.univesp.br
-
-
 ############### ESTADOS / MUNICIPIOS ###################
 
 ###
@@ -74,6 +66,7 @@ X-Username: 23212332@aluno.univesp.br
 #
 GET https://fmp.pythonanywhere.com/api/locations/states HTTP/1.1
 content-type: application/json
+
 
 ####
 # LISTA DE MUNICÍPIOS DE UM ESTADO
@@ -97,4 +90,26 @@ content-type: application/json
 
 {
     "nome": "PROFISSAO TESTE %{{$datetime iso8601}}"
+}
+
+############### PRESTADORES ###################
+
+###
+# BUSCA PROFISSIONAIS
+#
+GET  https://fmp.pythonanywhere.com/api/search/professionals?idProfissao=17 HTTP/1.1
+X-Username: 23212332@aluno.univesp.br
+
+####
+# INCLUIR AVALIAÇÃO
+#
+POST  https://fmp.pythonanywhere.com/api/reviews HTTP/1.1
+X-Username: 23212332@aluno.univesp.br
+content-type: application/json
+
+{
+    "idProfissao": 17,
+    "idPrestador": 4,
+    "avaliacao": 5,
+    "comentario": "nota 5"
 }
