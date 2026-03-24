@@ -63,13 +63,8 @@ content-type: application/json
 ###
 # BUSCA PROFISSIONAIS
 #
-GET  https://fmp.pythonanywhere.com/api/search/professionals HTTP/1.1
+GET  https://fmp.pythonanywhere.com/api/search/professionals?idProfissao=17 HTTP/1.1
 X-Username: 23212332@aluno.univesp.br
-content-type: application/json
-
-{
-    "idProfissao": 17
-}
 
 
 ############### ESTADOS / MUNICIPIOS ###################
