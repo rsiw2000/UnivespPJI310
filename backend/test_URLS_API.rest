@@ -1,3 +1,6 @@
+
+################### AUTENTICAÇÃO ######################
+
 ###
 # LOGIN
 #
@@ -11,6 +14,67 @@ content-type: application/json
 
 
 ###
+# LOGOUT
+# 
+POST https://fmp.pythonanywhere.com/api/auth/logout HTTP/1.1
+
+################### USUARIO ######################
+
+###
+# MINHA CONTA
+#
+GET  https://fmp.pythonanywhere.com/api/user/profile HTTP/1.1
+X-Username: 23212332@aluno.univesp.br
+
+
+###
+# UPDATE MINHA CONTA
+#
+PUT  https://fmp.pythonanywhere.com/api/user/profile HTTP/1.1
+X-Username: 23212332@aluno.univesp.br
+content-type: application/json
+
+{
+"nome": "Renato Perseguini %{{$datetime iso8601}}",
+"telefone": "204389048230",
+"estado": "SP",
+"cidade": 3548609,
+"bairro": "Bairro novo"
+}
+
+###
+# MINHAS PROFISSOES 
+#
+GET  https://fmp.pythonanywhere.com//api/user/professions HTTP/1.1
+X-Username: 23212332@aluno.univesp.br
+
+###
+# ADICIONA MINHAS PROFISSOES 
+#
+POST  https://fmp.pythonanywhere.com/api/user/professions HTTP/1.1
+X-Username: 23212332@aluno.univesp.br
+content-type: application/json
+
+{
+    "id": 17
+}
+
+
+###
+# BUSCA PROFISSIONAIS
+#
+GET  https://fmp.pythonanywhere.com/api/search/professionals HTTP/1.1
+X-Username: 23212332@aluno.univesp.br
+content-type: application/json
+
+{
+    "idProfissao": 17
+}
+
+
+############### ESTADOS / MUNICIPIOS ###################
+
+###
 # LISTA DE ESTADOS
 #
 GET https://fmp.pythonanywhere.com/api/locations/states HTTP/1.1
@@ -22,6 +86,7 @@ content-type: application/json
 GET https://fmp.pythonanywhere.com/api/locations/cities/RR HTTP/1.1
 content-type: application/json
 
+############### PROFISSOES ###################
 
 ####
 # LISTA DE PROFISSOES
@@ -30,3 +95,11 @@ GET https://fmp.pythonanywhere.com/api/professions HTTP/1.1
 content-type: application/json
 
 ####
+# INCLUI PROFISSAO
+#
+POST https://fmp.pythonanywhere.com/api/professions HTTP/1.1
+content-type: application/json
+
+{
+    "nome": "PROFISSAO TESTE %{{$datetime iso8601}}"
+}

@@ -44,7 +44,6 @@ class Profissoes():
         profissao = Profissao(nova)
         Session.add(profissao)
         Session.commit()
-        return profissao.id_profissao
 
     def apaga(self, id_profissao: int) -> bool:
         reg = self.obtem(id_profissao)
