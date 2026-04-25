@@ -30,6 +30,10 @@ import com.univesp.pji310.euindico.data.model.*
 fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
     val scrollState = rememberScrollState()
 
+    LaunchedEffect(Unit) {
+        viewModel.loadProfile()
+    }
+
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var cpf by remember { mutableStateOf("") }

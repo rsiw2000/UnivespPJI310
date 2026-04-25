@@ -35,6 +35,11 @@ import com.univesp.pji310.euindico.ui.viewmodels.SettingsViewModel
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel, onLogout: () -> Unit, onNavigateToEditProfile: () -> Unit) {
     val state by viewModel.state.collectAsState()
+    
+    LaunchedEffect(Unit) {
+        viewModel.loadProfile()
+    }
+    
     Column(
         modifier = Modifier
             .fillMaxSize()
