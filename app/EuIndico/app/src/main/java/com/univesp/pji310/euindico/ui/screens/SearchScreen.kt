@@ -205,50 +205,64 @@ fun SearchFilterFields(
     onProfessionChange: (String) -> Unit,
     categories: List<String>
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        // Search
-        TextField(
-            value = query,
-            onValueChange = onQueryChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(12.dp)),
-            placeholder = { Text("Ex: Eletricista, Encanador...", fontSize = 14.sp) },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            singleLine = true
-        )
-        // Filter
-        var expanded by remember { mutableStateOf(false) }
-        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+    var expanded by remember { mutableStateOf(false) }
+    val filteredCategories = if (query.isBlank()) {
+        categories
+    } else {
+        categories.filter { it.contains(query, ignoreCase = true) }
+    }
+
+    Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
+        ExposedDropdownMenuBox(
+            expanded = expanded && filteredCategories.isNotEmpty(),
+            onExpandedChange = { expanded = it }
+        ) {
             TextField(
-                value = if(profession.isEmpty()) "Todas as Categorias" else profession,
-                onValueChange = {},
-                readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                value = query,
+                onValueChange = { newValue ->
+                    onQueryChange(newValue)
+                    expanded = newValue.isNotBlank()
+                },
                 modifier = Modifier
                     .menuAnchor()
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp)),
+                placeholder = { Text("Buscar profissão...", fontSize = 14.sp) },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
+                trailingIcon = {
+                    if (query.isNotEmpty()) {
+                        androidx.compose.material3.IconButton(onClick = {
+                            onQueryChange("")
+                            onProfessionChange("")
+                            expanded = false
+                        }) {
+                            Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Limpar", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
+                ),
+                singleLine = true,
+                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
+                    keyboardType = androidx.compose.ui.text.input.KeyboardType.Text,
+                    capitalization = androidx.compose.ui.text.input.KeyboardCapitalization.Sentences,
+                    autoCorrect = false
                 )
             )
-            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                val opts = listOf("Todas as Categorias") + categories
-                opts.forEach { opt ->
+            ExposedDropdownMenu(
+                expanded = expanded && filteredCategories.isNotEmpty(),
+                onDismissRequest = { expanded = false }
+            ) {
+                filteredCategories.forEach { category ->
                     DropdownMenuItem(
-                        text = { Text(opt) },
+                        text = { Text(category) },
                         onClick = {
-                            onProfessionChange(if(opt == "Todas as Categorias") "" else opt)
+                            onQueryChange(category)
+                            onProfessionChange(category)
                             expanded = false
                         }
                     )
