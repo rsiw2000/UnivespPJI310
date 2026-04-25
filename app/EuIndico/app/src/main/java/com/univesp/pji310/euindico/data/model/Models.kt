@@ -14,6 +14,18 @@ data class GenericResponse(
     val token: String? = null
 )
 
+data class RegisterRequest(
+    val nome: String,
+    val email: String,
+    val password: String,
+    val confirmPassword: String,
+    val cpfCnpj: String,
+    val telefone: String,
+    val estado: String,
+    val cidade: Int,
+    val bairro: String
+)
+
 // Data Wrapper for responses returning a list
 data class DataWrapper<T>(
     val success: Boolean,

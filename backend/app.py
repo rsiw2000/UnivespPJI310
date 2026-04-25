@@ -108,8 +108,11 @@ class APIRoutes():
             return jsonify({"success": False, "message": "Senha muito pequena!"}), 400
             
         if APIRoutes.Usuarios.get(email):
-            return jsonify({"success": False, "message": "Usuario já cadastrado!"}), 400
+            return jsonify({"success": False, "message": "Usuario com email já cadastrado!"}), 400
             
+        if APIRoutes.Usuarios.get_por_doc(cpf_cnpj):
+            return jsonify({"success": False, "message": "Usuario com CPF/CNPJ já cadastrado!"}), 400
+
         APIRoutes.Usuarios.cadastra(nome, telefone, cpf_cnpj, password, email, cidade, estado, bairro)
         return jsonify({"success": True, "message": "Cadastro criado com sucesso!"})
 

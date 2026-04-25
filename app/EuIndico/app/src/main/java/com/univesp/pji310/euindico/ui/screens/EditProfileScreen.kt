@@ -23,6 +23,7 @@ import com.univesp.pji310.euindico.R
 
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsViewModel
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsState
+import com.univesp.pji310.euindico.data.model.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,24 +34,44 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var cpf by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
-    var state by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
+    
+    var selectedState by remember { mutableStateOf<StateResponse?>(null) }
+    var selectedCity by remember { mutableStateOf<CityResponse?>(null) }
+    
     var neighborhood by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
     val vmState by viewModel.state.collectAsState()
+    val states by viewModel.statesList.collectAsState()
+    val cities by viewModel.citiesList.collectAsState()
 
-    LaunchedEffect(vmState) {
+    LaunchedEffect(vmState, states) {
         if (vmState is SettingsState.Success) {
             val user = (vmState as SettingsState.Success).profile
             name = user.nome?.substringBefore(" %") ?: ""
             email = user.email ?: user.username ?: ""
             phone = user.telefone ?: ""
-            state = user.estado ?: ""
-            city = user.cidade?.toString() ?: ""
             neighborhood = user.bairro ?: ""
             cpf = user.cpfCnpj?.toString() ?: ""
+            
+            // Find and set state
+            if (selectedState == null && states.isNotEmpty()) {
+                val userState = states.find { it.uf == user.estado }
+                selectedState = userState
+                userState?.let { viewModel.loadCities(it.uf) }
+            }
+        }
+    }
+    
+    // Once cities load, if we haven't selected one yet, try to find the user's city
+    LaunchedEffect(cities) {
+        if (selectedCity == null && cities.isNotEmpty() && vmState is SettingsState.Success) {
+            val user = (vmState as SettingsState.Success).profile
+            val userCityId = (user.cidade as? Number)?.toInt()
+            if (userCityId != null) {
+                selectedCity = cities.find { it.id == userCityId }
+            }
         }
     }
 
@@ -125,11 +146,26 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Column(modifier = Modifier.weight(1f)) {
                     InputLabel("Estado")
-                    DropdownField(value = state, onValueChange = { state = it }, options = listOf("SP", "RJ", "MG"))
+                    DropdownField(
+                        value = selectedState?.nome ?: "", 
+                        onValueChange = { nome ->
+                            val newState = states.find { it.nome == nome }
+                            selectedState = newState
+                            selectedCity = null
+                            newState?.let { viewModel.loadCities(it.uf) }
+                        }, 
+                        options = states.mapNotNull { it.nome }
+                    )
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     InputLabel("Cidade")
-                    DropdownField(value = city, onValueChange = { city = it }, options = listOf("São Paulo", "São José dos Campos"))
+                    DropdownField(
+                        value = selectedCity?.nome ?: "", 
+                        onValueChange = { nome ->
+                            selectedCity = cities.find { it.nome == nome }
+                        }, 
+                        options = cities.map { it.nome }
+                    )
                 }
             }
 
@@ -156,8 +192,8 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                     viewModel.updateProfile(
                         nome = name,
                         telefone = phone,
-                        estado = state,
-                        cidadeStr = city,
+                        estado = selectedState?.uf ?: "",
+                        cidadeId = selectedCity?.id ?: 0,
                         bairro = neighborhood
                     ) { success ->
                         isSaving = false

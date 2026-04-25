@@ -13,6 +13,9 @@ interface ApiService {
     @POST("auth/logout")
     suspend fun logout(): Response<GenericResponse>
 
+    @POST("user/register")
+    suspend fun register(@Body request: RegisterRequest): Response<GenericResponse>
+
     // User Profile
     @GET("user/profile")
     suspend fun getUserProfile(@Header("X-Username") username: String): Response<UserResponse>

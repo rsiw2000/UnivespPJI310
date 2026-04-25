@@ -55,14 +55,14 @@ class AuthViewModel(private val userPreferences: UserPreferences) : ViewModel() 
     }
 
     fun logout() {
+        userPreferences.clear()
+        _authState.value = AuthState.Idle
         viewModelScope.launch {
             try {
                 apiService.logout()
             } catch (e: Exception) {
                 // Ignore logout call failure, we clear local session anyway
             }
-            userPreferences.clear()
-            _authState.value = AuthState.Idle
         }
     }
 }

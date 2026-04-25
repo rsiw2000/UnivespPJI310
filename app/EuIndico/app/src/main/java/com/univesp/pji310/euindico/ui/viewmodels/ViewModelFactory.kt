@@ -18,6 +18,10 @@ class ViewModelFactory(private val userPreferences: UserPreferences) : ViewModel
             @Suppress("UNCHECKED_CAST")
             return SettingsViewModel(userPreferences) as T
         }
+        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return RegisterViewModel() as T
+        }
         if (modelClass.isAssignableFrom(MyServicesViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return MyServicesViewModel(userPreferences) as T

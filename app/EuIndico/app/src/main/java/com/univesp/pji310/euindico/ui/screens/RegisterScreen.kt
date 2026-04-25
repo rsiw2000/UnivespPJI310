@@ -23,22 +23,53 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
 import com.univesp.pji310.euindico.R
+import com.univesp.pji310.euindico.data.model.*
+import com.univesp.pji310.euindico.ui.viewmodels.RegisterState
+import com.univesp.pji310.euindico.ui.viewmodels.RegisterViewModel
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(onRegisterSuccess: () -> Unit, onNavigateToLogin: () -> Unit) {
+fun RegisterScreen(
+    viewModel: RegisterViewModel,
+    onRegisterSuccess: () -> Unit, 
+    onNavigateToLogin: () -> Unit
+) {
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+
+    val registerState by viewModel.state.collectAsState()
+    val states by viewModel.statesList.collectAsState()
+    val cities by viewModel.citiesList.collectAsState()
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var cpf by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
-    var state by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
+    
+    var selectedState by remember { mutableStateOf<StateResponse?>(null) }
+    var selectedCity by remember { mutableStateOf<CityResponse?>(null) }
+    
     var neighborhood by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var agreed by remember { mutableStateOf(false) }
+
+    LaunchedEffect(registerState) {
+        when (registerState) {
+            is RegisterState.Success -> {
+                Toast.makeText(context, "Conta criada com sucesso!", Toast.LENGTH_LONG).show()
+                viewModel.clearState()
+                onRegisterSuccess()
+            }
+            is RegisterState.Error -> {
+                Toast.makeText(context, (registerState as RegisterState.Error).message, Toast.LENGTH_LONG).show()
+                viewModel.clearState()
+            }
+            else -> {}
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -116,11 +147,26 @@ fun RegisterScreen(onRegisterSuccess: () -> Unit, onNavigateToLogin: () -> Unit)
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     Column(modifier = Modifier.weight(1f)) {
                         InputLabel("Estado")
-                        DropdownField(value = state, onValueChange = { state = it }, options = listOf("SP", "RJ", "MG"))
+                        DropdownField(
+                            value = selectedState?.nome ?: "", 
+                            onValueChange = { nome -> 
+                                val newState = states.find { it.nome == nome }
+                                selectedState = newState
+                                selectedCity = null
+                                newState?.let { viewModel.loadCities(it.uf) }
+                            }, 
+                            options = states.mapNotNull { it.nome }
+                        )
                     }
                     Column(modifier = Modifier.weight(1f)) {
                         InputLabel("Cidade")
-                        DropdownField(value = city, onValueChange = { city = it }, options = listOf("São Paulo", "Rio de Janeiro"))
+                        DropdownField(
+                            value = selectedCity?.nome ?: "", 
+                            onValueChange = { nome ->
+                                selectedCity = cities.find { it.nome == nome }
+                            }, 
+                            options = cities.map { it.nome }
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -168,18 +214,50 @@ fun RegisterScreen(onRegisterSuccess: () -> Unit, onNavigateToLogin: () -> Unit)
             // CTA
             val brush = Brush.linearGradient(listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary))
             Button(
-                onClick = onRegisterSuccess,
+                onClick = {
+                    if (password != confirmPassword) {
+                        Toast.makeText(context, "As senhas não coincidem", Toast.LENGTH_SHORT).show()
+                        return@Button
+                    }
+                    if (!agreed) {
+                        Toast.makeText(context, "Você precisa aceitar os termos", Toast.LENGTH_SHORT).show()
+                        return@Button
+                    }
+                    if (selectedState == null || selectedCity == null) {
+                        Toast.makeText(context, "Selecione seu estado e cidade", Toast.LENGTH_SHORT).show()
+                        return@Button
+                    }
+
+                    viewModel.register(
+                        RegisterRequest(
+                            nome = name,
+                            email = email,
+                            password = password,
+                            confirmPassword = confirmPassword,
+                            cpfCnpj = cpf,
+                            telefone = phone,
+                            estado = selectedState!!.uf,
+                            cidade = selectedCity!!.id,
+                            bairro = neighborhood
+                        )
+                    )
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
                     .background(brush, RoundedCornerShape(28.dp)),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                contentPadding = PaddingValues()
+                contentPadding = PaddingValues(),
+                enabled = registerState !is RegisterState.Loading
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Criar Conta", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(Icons.Default.ArrowForward, contentDescription = null)
+                if (registerState is RegisterState.Loading) {
+                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
+                } else {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("Criar Conta", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Icon(Icons.Default.ArrowForward, contentDescription = null)
+                    }
                 }
             }
 

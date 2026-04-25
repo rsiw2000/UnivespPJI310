@@ -3,7 +3,7 @@ package com.univesp.pji310.euindico.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.univesp.pji310.euindico.data.local.UserPreferences
-import com.univesp.pji310.euindico.data.model.UserProfile
+import com.univesp.pji310.euindico.data.model.*
 import com.univesp.pji310.euindico.data.remote.ApiClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,9 +20,16 @@ class SettingsViewModel(private val userPreferences: UserPreferences) : ViewMode
     
     private val _state = MutableStateFlow<SettingsState>(SettingsState.Loading)
     val state: StateFlow<SettingsState> = _state
+    
+    private val _statesList = MutableStateFlow<List<StateResponse>>(emptyList())
+    val statesList: StateFlow<List<StateResponse>> = _statesList
+
+    private val _citiesList = MutableStateFlow<List<CityResponse>>(emptyList())
+    val citiesList: StateFlow<List<CityResponse>> = _citiesList
 
     init {
         loadProfile()
+        loadStates()
     }
 
     fun loadProfile() {
@@ -48,11 +55,37 @@ class SettingsViewModel(private val userPreferences: UserPreferences) : ViewMode
         }
     }
 
+    fun loadStates() {
+        viewModelScope.launch {
+            try {
+                val response = apiService.getStates()
+                if (response.isSuccessful) {
+                    _statesList.value = response.body()?.data ?: emptyList()
+                }
+            } catch (e: Exception) {
+                // Silently fail or log
+            }
+        }
+    }
+
+    fun loadCities(uf: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.getCities(uf)
+                if (response.isSuccessful) {
+                    _citiesList.value = response.body()?.data ?: emptyList()
+                }
+            } catch (e: Exception) {
+                _citiesList.value = emptyList()
+            }
+        }
+    }
+
     fun updateProfile(
         nome: String,
         telefone: String,
         estado: String,
-        cidadeStr: String,
+        cidadeId: Int,
         bairro: String,
         onComplete: (Boolean) -> Unit
     ) {
@@ -63,7 +96,7 @@ class SettingsViewModel(private val userPreferences: UserPreferences) : ViewMode
                     nome = nome,
                     telefone = telefone,
                     estado = estado,
-                    cidade = cidadeStr.toIntOrNull() ?: 3548609,
+                    cidade = cidadeId,
                     bairro = bairro
                 )
                 val response = apiService.updateUserProfile(activeUsername, request)

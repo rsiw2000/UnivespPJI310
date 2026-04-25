@@ -22,6 +22,7 @@ import com.univesp.pji310.euindico.ui.viewmodels.AuthViewModel
 import com.univesp.pji310.euindico.ui.viewmodels.SearchViewModel
 import com.univesp.pji310.euindico.ui.viewmodels.MyServicesViewModel
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsViewModel
+import com.univesp.pji310.euindico.ui.viewmodels.RegisterViewModel
 import com.univesp.pji310.euindico.ui.viewmodels.ViewModelFactory
 
 @Composable
@@ -33,6 +34,7 @@ fun AppNavGraph(viewModelFactory: ViewModelFactory, userPreferences: UserPrefere
     val searchViewModel: SearchViewModel = viewModel(factory = viewModelFactory)
     val settingsViewModel: SettingsViewModel = viewModel(factory = viewModelFactory)
     val myServicesViewModel: MyServicesViewModel = viewModel(factory = viewModelFactory)
+    val registerViewModel: RegisterViewModel = viewModel(factory = viewModelFactory)
 
     // Determine Start Destination
     val startDest = if (userPreferences.getUsername() != null) Screen.Dashboard.route else Screen.Login.route
@@ -74,6 +76,7 @@ fun AppNavGraph(viewModelFactory: ViewModelFactory, userPreferences: UserPrefere
             }
             composable(Screen.Register.route) {
                 RegisterScreen(
+                    viewModel = registerViewModel,
                     onRegisterSuccess = { navController.navigate(Screen.Login.route) {
                         popUpTo(Screen.Register.route) { inclusive = true }
                     } },
@@ -122,7 +125,9 @@ fun AppNavGraph(viewModelFactory: ViewModelFactory, userPreferences: UserPrefere
                     onLogout = { 
                         authViewModel.logout()
                         navController.navigate(Screen.Login.route) {
-                            popUpTo(0) // Clear back stack
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
                         } 
                     },
                     onNavigateToEditProfile = { navController.navigate(Screen.EditProfile.route) }
