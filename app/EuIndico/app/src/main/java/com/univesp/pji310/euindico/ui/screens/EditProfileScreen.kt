@@ -18,7 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import androidx.compose.ui.res.painterResource
+import com.univesp.pji310.euindico.R
 
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsViewModel
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsState
@@ -93,8 +94,8 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                         .background(Color.White),
                     contentAlignment = Alignment.Center
                 ) {
-                    AsyncImage(
-                        model = "https://lh3.googleusercontent.com/aida/ADBb0uheT5VExEKbyHnslZhh90Ore0ZUwNP8ZsbHQTHWlNT2stztvCyTMaULR_wPbSu75405kx259jYNX4Di8o49nfbnmnLP7b8CGSG7RjmnD05xt3MvRRgc1e13CxB2heQbwerUKNCS1HC5H_MHlsf0POaGjS9RWy81Qz84K5RkmIMvWtnJ0Hm9KpR-4HG6dlIY37F0aV0WNpUqDBpLP9N-vwOTnosR3GPqQAorqNUt8mXyS0T9tF9fBUdWZ0WlJlp2w-vHKnJaPV_TWoA",
+                    androidx.compose.foundation.Image(
+                        painter = painterResource(id = R.drawable.logo_v1_peq),
                         contentDescription = "Eu Indico Logo",
                         modifier = Modifier.fillMaxSize()
                     )

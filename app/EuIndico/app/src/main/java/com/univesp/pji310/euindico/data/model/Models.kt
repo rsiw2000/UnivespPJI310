@@ -76,6 +76,7 @@ data class ProfessionalResult(
     val nome: String? = null,
     val contato: String? = null,
     val avaliacao: String? = null,
+    val bairro: String? = null,
     val cidade: String? = null,
     val estado: String? = null
 )

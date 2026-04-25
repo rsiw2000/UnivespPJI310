@@ -26,7 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import androidx.compose.ui.res.painterResource
+import com.univesp.pji310.euindico.R
 
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsState
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsViewModel
@@ -68,8 +69,8 @@ fun SettingsScreen(viewModel: SettingsViewModel, onLogout: () -> Unit, onNavigat
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box {
-                            AsyncImage(
-                                model = "https://lh3.googleusercontent.com/aida-public/AB6AXuC2UDzG6n7UdPsfrN-oFz1mHZWuwoQVbeE24egrE-6m0WuPPFXkz-qcoKXIy5OecA4S5szeHiZaMW5URB7gQV98ulrAnUWS26vFpcJXRw63kmEKRYcOKY0dEX9zN0Qwn0wi1n8jIYpB5dIRY6Um0hIPKRvQ9t_8gcFVhk-dKEj4cWiogBQarfFuMFWeWppUcKePlFEJFo8SB44_V8mZdE6kvcOex6is30-YqPsh4HxzhFY6QusEv-1cuBSq2zOuaN4o_oDkjo_3y3f7",
+                            androidx.compose.foundation.Image(
+                                painter = painterResource(id = R.drawable.logo_v1_peq),
                                 contentDescription = null,
                                 modifier = Modifier.size(64.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer)
                             )

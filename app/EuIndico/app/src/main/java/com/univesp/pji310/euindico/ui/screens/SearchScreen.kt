@@ -29,6 +29,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import androidx.compose.ui.res.painterResource
+import com.univesp.pji310.euindico.R
 
 import com.univesp.pji310.euindico.data.model.ProfessionalResult
 import com.univesp.pji310.euindico.ui.viewmodels.SearchState
@@ -170,8 +172,8 @@ fun TopSearchBar() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            AsyncImage(
-                model = "https://lh3.googleusercontent.com/aida/ADBb0uj9EBiJqBrW5TButeN7qxeF3V3OJ--HmKwMOfe2Mm55dYbjM34H4u7B8w16wgGrDcCfFOLifw6PbghNd2EO4igS_prnbrSOp02QHMWytm5zIw0fI1FA5a8ffViL8Kazdqa_hZI6YmtoiS9AoY4aYVkXX0_oRy9_oAasQu8aTa0BUemp5OrUjDQXBKMtDaBWdC2fMbjI_lYdtQI8rpdsxNKFIL0Z4MpUMJ9uJQXyOLXT5qheTr28t_-_jlPclJeHYE-GsXHMi5GZxVo",
+            androidx.compose.foundation.Image(
+                painter = painterResource(id = R.drawable.logo_v1_peq),
                 contentDescription = null,
                 modifier = Modifier.size(36.dp).clip(RoundedCornerShape(8.dp))
             )
@@ -277,7 +279,7 @@ fun ProfessionalCard(prof: ProfessionalResult, onReviewClick: () -> Unit, onCont
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(prof.nome ?: "Sem Nome", fontWeight = FontWeight.SemiBold, fontSize = 15.sp, color = MaterialTheme.colorScheme.onSurface)
-                        Text(prof.cidade ?: "Região Padrão", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(prof.bairro ?: "Região Padrão", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
                 
@@ -360,7 +362,12 @@ fun AvaliacaoDialog(
                     onValueChange = { comentario = it },
                     label = { Text("Comentário") },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(8.dp),
+                    keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
+                        keyboardType = androidx.compose.ui.text.input.KeyboardType.Text,
+                        capitalization = androidx.compose.ui.text.input.KeyboardCapitalization.Sentences,
+                        autoCorrect = true
+                    )
                 )
             }
         },

@@ -242,6 +242,7 @@ class APIRoutes():
             "id": x[0], 
             "idProfissao": id_profissao, 
             "contato": usuarios[x[0]].telefone, 
+            "bairro": usuarios[x[0]].bairro,
             "nome": usuarios[x[0]].nome, 
             "avaliacao": APIRoutes.Avaliacoes[APIRoutes.ServicosPrestados.avaliacao_prestador(x[0], id_profissao)]
         } for x in profissionais if x[0] in usuarios]
