@@ -26,6 +26,13 @@ class MyServicesViewModel(private val userPreferences: UserPreferences) : ViewMo
     private val _state = MutableStateFlow<MyServicesState>(MyServicesState.Loading)
     val state: StateFlow<MyServicesState> = _state
 
+    private val _actionMessage = MutableStateFlow<String?>(null)
+    val actionMessage: StateFlow<String?> = _actionMessage
+
+    fun clearActionMessage() {
+        _actionMessage.value = null
+    }
+
     init {
         loadData()
     }
@@ -71,13 +78,20 @@ class MyServicesViewModel(private val userPreferences: UserPreferences) : ViewMo
                             request = AddProfessionRequest(id = profId)
                         )
                         if (response.isSuccessful) {
+                            _actionMessage.value = "Serviço adicionado com sucesso!"
                             loadData() // Refresh list
                         } else {
-                            _state.value = MyServicesState.Error("Falha ao adicionar serviço")
+                            val errorJson = response.errorBody()?.string()
+                            val msg = try {
+                                org.json.JSONObject(errorJson ?: "").getString("message")
+                            } catch (e: Exception) {
+                                "Falha ao adicionar serviço"
+                            }
+                            _actionMessage.value = msg
                             loadData() // Re-load to show old state
                         }
                     } catch (e: Exception) {
-                        _state.value = MyServicesState.Error(e.localizedMessage ?: "Erro de rede")
+                        _actionMessage.value = e.localizedMessage ?: "Erro de rede"
                         loadData()
                     }
                 }

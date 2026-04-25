@@ -1,5 +1,8 @@
 package com.univesp.pji310.euindico.ui.screens
 
+import android.content.Intent
+import android.net.Uri
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -37,6 +40,7 @@ fun SearchScreen(viewModel: SearchViewModel) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedProfession by remember { mutableStateOf("") }
     var professionalToReview by remember { mutableStateOf<ProfessionalResult?>(null) }
+    var professionalToContact by remember { mutableStateOf<ProfessionalResult?>(null) }
 
     val searchState by viewModel.state.collectAsState()
 
@@ -116,7 +120,11 @@ fun SearchScreen(viewModel: SearchViewModel) {
                         }
                     } else {
                         items(professionals) { prof ->
-                            ProfessionalCard(prof, onReviewClick = { professionalToReview = prof })
+                            ProfessionalCard(
+                                prof, 
+                                onReviewClick = { professionalToReview = prof },
+                                onContactClick = { professionalToContact = prof }
+                            )
                             Spacer(modifier = Modifier.height(12.dp))
                         }
                     }
@@ -139,6 +147,13 @@ fun SearchScreen(viewModel: SearchViewModel) {
                         // Could show a snackbar here, ignoring for simplicity
                     }
                 }
+            )
+        }
+
+        if (professionalToContact != null) {
+            ContatoDialog(
+                professional = professionalToContact!!,
+                onDismiss = { professionalToContact = null }
             )
         }
     }
@@ -242,7 +257,7 @@ fun SearchFilterFields(
 }
 
 @Composable
-fun ProfessionalCard(prof: ProfessionalResult, onReviewClick: () -> Unit) {
+fun ProfessionalCard(prof: ProfessionalResult, onReviewClick: () -> Unit, onContactClick: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp),
@@ -286,7 +301,7 @@ fun ProfessionalCard(prof: ProfessionalResult, onReviewClick: () -> Unit) {
 
                 // Actions
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { }) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { onContactClick() }) {
                         Icon(Icons.Default.Call, contentDescription = null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text("Contato", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.secondary)
@@ -357,6 +372,73 @@ fun AvaliacaoDialog(
         dismissButton = {
             TextButton(onClick = onDismiss) {
                 Text("Cancelar")
+            }
+        }
+    )
+}
+
+@Composable
+fun ContatoDialog(
+    professional: ProfessionalResult,
+    onDismiss: () -> Unit
+) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val phone = professional.contato ?: "Não informado"
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Contato", fontWeight = FontWeight.Bold, fontSize = 18.sp) },
+        text = {
+            Column {
+                Text(
+                    text = professional.nome ?: "Profissional",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        Icons.Default.Call,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = phone,
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+                if (phone != "Não informado") {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(
+                        onClick = {
+                            val cleanPhone = phone.replace(Regex("[^0-9]"), "")
+                            val whatsappUri = Uri.parse("https://wa.me/55$cleanPhone")
+                            val intent = Intent(Intent.ACTION_VIEW, whatsappUri)
+                            context.startActivity(intent)
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF25D366)),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.fillMaxWidth().height(44.dp)
+                    ) {
+                        Icon(
+                            Icons.Rounded.Chat,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Abrir WhatsApp", color = Color.White, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Fechar")
             }
         }
     )

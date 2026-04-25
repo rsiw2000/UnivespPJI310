@@ -31,6 +31,15 @@ fun MyServicesScreen(viewModel: MyServicesViewModel, onNavigateToEditProfile: ()
     var expanded by remember { mutableStateOf(false) }
 
     val state by viewModel.state.collectAsState()
+    val actionMessage by viewModel.actionMessage.collectAsState()
+    val context = androidx.compose.ui.platform.LocalContext.current
+
+    LaunchedEffect(actionMessage) {
+        actionMessage?.let { msg ->
+            android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show()
+            viewModel.clearActionMessage()
+        }
+    }
 
     Column(
         modifier = Modifier
