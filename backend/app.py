@@ -243,7 +243,7 @@ class APIRoutes():
             "idProfissao": id_profissao, 
             "contato": usuarios[x[0]].telefone, 
             "nome": usuarios[x[0]].nome, 
-            "nota": APIRoutes.Avaliacoes[APIRoutes.ServicosPrestados.avaliacao_prestador(x[0], id_profissao)]
+            "avaliacao": APIRoutes.Avaliacoes[APIRoutes.ServicosPrestados.avaliacao_prestador(x[0], id_profissao)]
         } for x in profissionais if x[0] in usuarios]
         
         return jsonify({"success": True, "data": lista})

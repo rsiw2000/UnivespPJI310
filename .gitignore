@@ -177,3 +177,7 @@ cython_debug/
 # VS Code
 .vscode
 static/images/desktop.ini
+app/EuIndico/.idea/.name
+
+.idea
+/app/EuIndico/.gradle

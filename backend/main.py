@@ -203,7 +203,7 @@ class MainPage():
             usuario = MainPage.Usuarios.get_por_id(idUsuario)
             if usuario and usuario.situacao in MainPage.UsuarioSituacoesValidas and (id_cidade is None or usuario.IdMunicipio == id_cidade):
                 usuarios[idUsuario] = usuario
-        lista = [{"id": x[0], "idProfissao": id_profissao, "contato": usuarios[x[0]].telefone, "nome": usuarios[x[0]].nome, "nota": MainPage.Avaliacoes[MainPage.ServicosPrestados.avaliacao_prestador(x[0], id_profissao)]}
+        lista = [{"id": x[0], "idProfissao": id_profissao, "contato": usuarios[x[0]].telefone, "nome": usuarios[x[0]].nome, "avaliacao": MainPage.Avaliacoes[MainPage.ServicosPrestados.avaliacao_prestador(x[0], id_profissao)]}
                     for x in profissionais]
         result = make_response(lista)
         result.headers.add('Content-Type', 'application/json')

@@ -89,7 +89,7 @@ POST https://fmp.pythonanywhere.com/api/professions HTTP/1.1
 content-type: application/json
 
 {
-    "nome": "PROFISSAO TESTE %{{$datetime iso8601}}"
+    "nome": "PROFISSAO TESTE {{$datetime iso8601}}"
 }
 
 ############### PRESTADORES ###################
