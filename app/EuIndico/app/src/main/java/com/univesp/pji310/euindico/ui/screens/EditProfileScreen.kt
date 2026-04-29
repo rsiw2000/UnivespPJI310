@@ -71,14 +71,19 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
     }
     
     // Once cities load, if we haven't selected one yet, try to find the user's city
-    LaunchedEffect(cities) {
+    LaunchedEffect(cities, vmState) {
         if (selectedCity == null && cities.isNotEmpty() && vmState is SettingsState.Success) {
             val user = (vmState as SettingsState.Success).profile
-            val userCityId = (user.cidade as? Number)?.toInt()
-            if (userCityId != null) {
-                val city = cities.find { it.id == userCityId }
+            val city = cities.find { 
+                when (val c = user.cidade) {
+                    is Number -> it.id == c.toInt()
+                    is String -> it.nome.equals(c, ignoreCase = true) || it.id.toString() == c
+                    else -> false
+                }
+            }
+            if (city != null) {
                 selectedCity = city
-                citySearchQuery = city?.nome ?: ""
+                citySearchQuery = city.nome
             }
         }
     }
