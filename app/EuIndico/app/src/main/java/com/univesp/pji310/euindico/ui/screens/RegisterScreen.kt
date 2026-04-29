@@ -50,6 +50,7 @@ fun RegisterScreen(
     
     var selectedState by remember { mutableStateOf<StateResponse?>(null) }
     var selectedCity by remember { mutableStateOf<CityResponse?>(null) }
+    var citySearchQuery by remember { mutableStateOf("") }
     
     var neighborhood by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -153,6 +154,7 @@ fun RegisterScreen(
                                 val newState = states.find { it.nome == nome }
                                 selectedState = newState
                                 selectedCity = null
+                                citySearchQuery = ""
                                 newState?.let { viewModel.loadCities(it.uf) }
                             }, 
                             options = states.mapNotNull { it.nome }
@@ -160,12 +162,14 @@ fun RegisterScreen(
                     }
                     Column(modifier = Modifier.weight(1f)) {
                         InputLabel("Cidade")
-                        DropdownField(
-                            value = selectedCity?.nome ?: "", 
-                            onValueChange = { nome ->
-                                selectedCity = cities.find { it.nome == nome }
-                            }, 
-                            options = cities.map { it.nome }
+                        CitySearchField(
+                            query = citySearchQuery,
+                            onQueryChange = { citySearchQuery = it },
+                            onCitySelected = { city ->
+                                selectedCity = city
+                                citySearchQuery = city.nome
+                            },
+                            cities = cities
                         )
                     }
                 }
@@ -344,7 +348,7 @@ fun DropdownField(
             placeholder = { Text("Selecione", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f), fontSize = 14.sp) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = Modifier
-                .menuAnchor()
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp)),
             colors = TextFieldDefaults.colors(
@@ -363,6 +367,64 @@ fun DropdownField(
                     text = { Text(selectionOption) },
                     onClick = {
                         onValueChange(selectionOption)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CitySearchField(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onCitySelected: (CityResponse) -> Unit,
+    cities: List<CityResponse>
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val filteredCities = remember(query, cities) {
+        if (query.isBlank()) {
+            cities
+        } else {
+            cities.filter { it.nome.contains(query, ignoreCase = true) }
+        }
+    }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded && filteredCities.isNotEmpty(),
+        onExpandedChange = { expanded = it }
+    ) {
+        TextField(
+            value = query,
+            onValueChange = {
+                onQueryChange(it)
+                expanded = true
+            },
+            placeholder = { Text("Selecione", color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f), fontSize = 14.sp) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier
+                .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp)),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+            singleLine = true
+        )
+        ExposedDropdownMenu(
+            expanded = expanded && filteredCities.isNotEmpty(),
+            onDismissRequest = { expanded = false }
+        ) {
+            filteredCities.take(50).forEach { city ->
+                DropdownMenuItem(
+                    text = { Text(city.nome) },
+                    onClick = {
+                        onCitySelected(city)
                         expanded = false
                     }
                 )

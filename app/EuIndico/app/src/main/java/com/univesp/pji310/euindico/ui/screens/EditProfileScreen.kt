@@ -6,7 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +24,7 @@ import com.univesp.pji310.euindico.R
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsViewModel
 import com.univesp.pji310.euindico.ui.viewmodels.SettingsState
 import com.univesp.pji310.euindico.data.model.*
+import com.univesp.pji310.euindico.ui.components.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,6 +42,7 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
     
     var selectedState by remember { mutableStateOf<StateResponse?>(null) }
     var selectedCity by remember { mutableStateOf<CityResponse?>(null) }
+    var citySearchQuery by remember { mutableStateOf("") }
     
     var neighborhood by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -74,7 +76,9 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
             val user = (vmState as SettingsState.Success).profile
             val userCityId = (user.cidade as? Number)?.toInt()
             if (userCityId != null) {
-                selectedCity = cities.find { it.id == userCityId }
+                val city = cities.find { it.id == userCityId }
+                selectedCity = city
+                citySearchQuery = city?.nome ?: ""
             }
         }
     }
@@ -95,7 +99,7 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.secondary)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.secondary)
             }
             Text("Eu Indico!", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.width(48.dp)) // To keep title centered
@@ -156,6 +160,7 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                             val newState = states.find { it.nome == nome }
                             selectedState = newState
                             selectedCity = null
+                            citySearchQuery = ""
                             newState?.let { viewModel.loadCities(it.uf) }
                         }, 
                         options = states.mapNotNull { it.nome }
@@ -163,12 +168,14 @@ fun EditProfileScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     InputLabel("Cidade")
-                    DropdownField(
-                        value = selectedCity?.nome ?: "", 
-                        onValueChange = { nome ->
-                            selectedCity = cities.find { it.nome == nome }
-                        }, 
-                        options = cities.map { it.nome }
+                    CitySearchField(
+                        query = citySearchQuery,
+                        onQueryChange = { citySearchQuery = it },
+                        onCitySelected = { city ->
+                            selectedCity = city
+                            citySearchQuery = city.nome
+                        },
+                        cities = cities
                     )
                 }
             }
