@@ -140,8 +140,8 @@ fun SettingsScreen(viewModel: SettingsViewModel, onLogout: () -> Unit, onNavigat
                     modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp)
                 ) {
                     Column(modifier = Modifier.padding(4.dp)) {
-                        ApiConfigRow("URL DO ENDPOINT", "https://api.editorial-precision.io/v1/sync", Icons.Default.Edit)
-                        ApiConfigRow("TOKEN DE AUTENTICAÇÃO", "Ativo • Válido até Out 2025", Icons.Default.Refresh, isToken = true)
+                        //ApiConfigRow("URL DO ENDPOINT", "https://api.editorial-precision.io/v1/sync", Icons.Default.Edit)
+                        ApiConfigRow("TOKEN DE AUTENTICAÇÃO", "Ativo • Válido até Junho 2026", Icons.Default.Refresh, isToken = true)
                     }
                 }
             }
