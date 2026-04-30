@@ -27,9 +27,17 @@ class SettingsViewModel(private val userPreferences: UserPreferences) : ViewMode
     private val _citiesList = MutableStateFlow<List<CityResponse>>(emptyList())
     val citiesList: StateFlow<List<CityResponse>> = _citiesList
 
+    private val _isDarkMode = MutableStateFlow<Boolean?>(userPreferences.getTheme())
+    val isDarkMode: StateFlow<Boolean?> = _isDarkMode
+
     init {
         loadProfile()
         loadStates()
+    }
+
+    fun setTheme(isDark: Boolean?) {
+        userPreferences.saveTheme(isDark)
+        _isDarkMode.value = isDark
     }
 
     fun loadProfile() {

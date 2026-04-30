@@ -14,7 +14,24 @@ class UserPreferences(context: Context) {
         return prefs.getString("USERNAME", null)
     }
 
+    fun saveTheme(isDarkMode: Boolean?) {
+        val editor = prefs.edit()
+        if (isDarkMode == null) {
+            editor.remove("THEME_DARK")
+        } else {
+            editor.putBoolean("THEME_DARK", isDarkMode)
+        }
+        editor.apply()
+    }
+
+    /**
+     * Returns null for system default, true for dark, false for light.
+     */
+    fun getTheme(): Boolean? {
+        return if (!prefs.contains("THEME_DARK")) null else prefs.getBoolean("THEME_DARK", false)
+    }
+
     fun clear() {
-        prefs.edit().clear().commit()
+        prefs.edit().clear().apply()
     }
 }

@@ -35,11 +35,72 @@ import com.univesp.pji310.euindico.ui.viewmodels.SettingsViewModel
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel, onLogout: () -> Unit, onNavigateToEditProfile: () -> Unit) {
     val state by viewModel.state.collectAsState()
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
     
+    var showThemeDialog by remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         viewModel.loadProfile()
     }
     
+    if (showThemeDialog) {
+        AlertDialog(
+            onDismissRequest = { showThemeDialog = false },
+            title = { Text("Escolha o Tema") },
+            text = {
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.setTheme(false)
+                                showThemeDialog = false
+                            }
+                            .padding(vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(selected = isDarkMode == false, onClick = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Claro")
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.setTheme(true)
+                                showThemeDialog = false
+                            }
+                            .padding(vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(selected = isDarkMode == true, onClick = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Escuro")
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.setTheme(null)
+                                showThemeDialog = false
+                            }
+                            .padding(vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(selected = isDarkMode == null, onClick = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Padrão do sistema")
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showThemeDialog = false }) {
+                    Text("Fechar")
+                }
+            }
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,7 +125,7 @@ fun SettingsScreen(viewModel: SettingsViewModel, onLogout: () -> Unit, onNavigat
             // User Profile Header
             item {
                 Card(
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     elevation = CardDefaults.cardElevation(0.5.dp),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
@@ -83,7 +144,7 @@ fun SettingsScreen(viewModel: SettingsViewModel, onLogout: () -> Unit, onNavigat
                                 Icons.Default.Verified,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.secondary,
-                                modifier = Modifier.size(20.dp).align(Alignment.BottomEnd).background(Color.White, CircleShape)
+                                modifier = Modifier.size(20.dp).align(Alignment.BottomEnd).background(MaterialTheme.colorScheme.surface, CircleShape)
                             )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
@@ -116,13 +177,23 @@ fun SettingsScreen(viewModel: SettingsViewModel, onLogout: () -> Unit, onNavigat
             item {
                 SectionHeader(icon = Icons.Default.Settings, title = "Preferências do App")
                 Card(
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     elevation = CardDefaults.cardElevation(0.5.dp),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
                 ) {
                     Column {
-                        PreferenceRow(Icons.Default.Palette, "Tema", "Padrão do sistema (Claro)")
+                        val themeSubtitle = when(isDarkMode) {
+                            true -> "Escuro"
+                            false -> "Claro"
+                            null -> "Padrão do sistema"
+                        }
+                        PreferenceRow(
+                            icon = Icons.Default.Palette, 
+                            title = "Tema", 
+                            subtitle = themeSubtitle,
+                            onClick = { showThemeDialog = true }
+                        )
                         Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.1f))
                         PreferenceRow(Icons.Default.Notifications, "Notificações", "Ativadas • Resumos diários", showToggle = true)
                         Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.1f))
@@ -183,9 +254,15 @@ fun SectionHeader(icon: androidx.compose.ui.graphics.vector.ImageVector, title: 
 }
 
 @Composable
-fun PreferenceRow(icon: androidx.compose.ui.graphics.vector.ImageVector, title: String, subtitle: String, showToggle: Boolean = false) {
+fun PreferenceRow(
+    icon: androidx.compose.ui.graphics.vector.ImageVector, 
+    title: String, 
+    subtitle: String, 
+    showToggle: Boolean = false,
+    onClick: () -> Unit = {}
+) {
     Row(
-        modifier = Modifier.fillMaxWidth().clickable { }.padding(16.dp),
+        modifier = Modifier.fillMaxWidth().clickable { onClick() }.padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -218,7 +295,7 @@ fun PreferenceRow(icon: androidx.compose.ui.graphics.vector.ImageVector, title: 
 @Composable
 fun ApiConfigRow(title: String, subtitle: String, icon: androidx.compose.ui.graphics.vector.ImageVector, isToken: Boolean = false) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp).background(Color.White, RoundedCornerShape(8.dp)).padding(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp).background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp)).padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
