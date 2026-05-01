@@ -54,6 +54,11 @@ class Usuarios():
         if dr.count() == 1:
             return dr.first()
 
+    def get_por_doc(self, cpf_cnpj: str) -> Usuario:
+        dr = Usuario.query.filter(Usuario.cpf_cnpj == cpf_cnpj)
+        if dr.count() == 1:
+            return dr.first()
+
     def cadastra(self, nome: str, telefone: str, cpf_cnpj: int, senha: str, email: str, id_municipio: int, id_estado: str, bairro: str = '', admin: bool = False):
         # 'id_usuario', 'Nome', 'Telefone', 'CpfCnpj', 'Email', 'IdMunicipio', 'IdEstado', 'Bairro', 'Situacao', 'BairroBusca', 'Senha'
         user = Usuario(nome, telefone, cpf_cnpj, email, id_municipio, id_estado, bairro, "A" if admin else "U", 
