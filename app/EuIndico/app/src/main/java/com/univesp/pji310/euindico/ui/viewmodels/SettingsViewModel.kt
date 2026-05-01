@@ -15,8 +15,10 @@ sealed class SettingsState {
     data class Error(val message: String) : SettingsState()
 }
 
-class SettingsViewModel(private val userPreferences: UserPreferences) : ViewModel() {
-    private val apiService = ApiClient.apiService
+class SettingsViewModel(
+    private val userPreferences: UserPreferences,
+    private val apiService: com.univesp.pji310.euindico.data.remote.ApiService
+) : ViewModel() {
     
     private val _state = MutableStateFlow<SettingsState>(SettingsState.Loading)
     val state: StateFlow<SettingsState> = _state

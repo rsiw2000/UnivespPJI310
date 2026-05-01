@@ -19,9 +19,10 @@ sealed class SearchState {
     data class Error(val message: String) : SearchState()
 }
 
-class SearchViewModel(private val userPreferences: UserPreferences) : ViewModel() {
-
-    private val apiService = ApiClient.apiService
+class SearchViewModel(
+    private val userPreferences: UserPreferences,
+    private val apiService: com.univesp.pji310.euindico.data.remote.ApiService
+) : ViewModel() {
     
     private val _state = MutableStateFlow<SearchState>(SearchState.Loading)
     val state: StateFlow<SearchState> = _state

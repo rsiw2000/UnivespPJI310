@@ -20,8 +20,10 @@ sealed class MyServicesState {
     data class Error(val message: String) : MyServicesState()
 }
 
-class MyServicesViewModel(private val userPreferences: UserPreferences) : ViewModel() {
-    private val apiService = ApiClient.apiService
+class MyServicesViewModel(
+    private val userPreferences: UserPreferences,
+    private val apiService: com.univesp.pji310.euindico.data.remote.ApiService
+) : ViewModel() {
     
     private val _state = MutableStateFlow<MyServicesState>(MyServicesState.Loading)
     val state: StateFlow<MyServicesState> = _state

@@ -16,9 +16,10 @@ sealed class AuthState {
     data class Error(val message: String) : AuthState()
 }
 
-class AuthViewModel(private val userPreferences: UserPreferences) : ViewModel() {
-
-    private val apiService = ApiClient.apiService
+class AuthViewModel(
+    private val userPreferences: UserPreferences,
+    private val apiService: com.univesp.pji310.euindico.data.remote.ApiService
+) : ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState: StateFlow<AuthState> = _authState

@@ -15,8 +15,9 @@ sealed class RegisterState {
     data class Error(val message: String) : RegisterState()
 }
 
-class RegisterViewModel : ViewModel() {
-    private val apiService = ApiClient.apiService
+class RegisterViewModel(
+    private val apiService: com.univesp.pji310.euindico.data.remote.ApiService
+) : ViewModel() {
 
     private val _state = MutableStateFlow<RegisterState>(RegisterState.Idle)
     val state: StateFlow<RegisterState> = _state
